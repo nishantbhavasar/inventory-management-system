@@ -11,15 +11,15 @@ import {
   ForeignKey,
   BelongsTo, BelongsToMany
 } from "sequelize-typescript";
-import { MediaAttibutes } from "@/types/Media.type";
 import Users from "./users.model";
 import Media from "./media.model";
 import Categories from "./categories.model";
 import InventoryMedias from "./inventory_medias.model";
 import InventoryCategories from "./inventory_categories.model";
+import InventoryAttribute from "@/types/InventoryType";
 
 @Table({ tableName: "inventories", timestamps: true, modelName: "inventories" })
-export default class Inventories extends Model<MediaAttibutes> {
+export default class Inventories extends Model<InventoryAttribute> {
   @AutoIncrement
   @Column({
     type: DataType.NUMBER,
