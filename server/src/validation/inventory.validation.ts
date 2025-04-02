@@ -16,7 +16,7 @@ export const createInventoryValidate = joi.object({
   price: joi.number().required(),
   quantity: joi.number().required(),
   created_by: joi.number().required(),
-  categories: joi.array().items(joi.number().required()),
+  categories: joi.array().items(joi.number().required()).required(),
 });
 
 export const updateInventoryValidate = joi.object({
@@ -24,6 +24,6 @@ export const updateInventoryValidate = joi.object({
   description: joi.string().required(),
   price: joi.number().required(),
   quantity: joi.number().required(),
-  categories: joi.array().items(joi.number().required()),
+  categories: joi.array().items(joi.number().required()).required(),
 });
 

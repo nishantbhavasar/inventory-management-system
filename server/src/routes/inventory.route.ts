@@ -14,7 +14,7 @@ inventoryRouter.post(
   ROUTES.GET_ALL_INVENTORIES,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const response = await inventoryController.getAllInventory();
+      const response = await inventoryController.getAllInventory(req?.body ?? {});
       sendResponse({
         res,
         ...response,

@@ -1,17 +1,32 @@
 import { ResponseType } from "@/types/ResponseType";
 import Inventories from "@/db/models/inventories.model";
 import InventoryAttribute from "@/types/InventoryType";
-import { Optional } from "sequelize";
-import Categories from "@/db/models/categories.model";
+import { Op, Optional } from "sequelize";
 
 export default class InventoryController {
-  async getAllInventory(): Promise<
-    ResponseType<{ rows: Inventories[]; count: number }>
-  > {
+  async getAllInventory(body: {
+    limit: number;
+    page: number;
+    search: string;
+  }): Promise<ResponseType<{ rows: Inventories[]; count: number }>> {
     try {
-      const inventories = await Inventories.findAndCountAll({
-        offset: 0,
-        limit: 10,
+      const page = body?.page ?? 1;
+      const limit = body?.limit ?? 10;
+      const offset = (page - 1) * limit;
+      const search = body?.search?.trim() ?? "";
+      const inventories = await Inventories.findAll({
+        offset,
+        limit,
+        where: {
+          [Op.or]: {
+            name: {
+              [Op.iLike]: `%${search}%`,
+            },
+            description: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+        },
         include: [
           {
             association: "categories",
@@ -25,11 +40,26 @@ export default class InventoryController {
           },
         ],
       });
+      const count = await Inventories.count({
+        where: {
+          [Op.or]: {
+            name: {
+              [Op.iLike]: `%${search}%`,
+            },
+            description: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+        },
+      });
 
       return {
         message: "Inventories Fetched Successfully",
         success: true,
-        data: inventories,
+        data: {
+          count,
+          rows: inventories,
+        },
         statusCode: 200,
       };
     } catch (error) {
