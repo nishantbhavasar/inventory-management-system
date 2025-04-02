@@ -54,6 +54,10 @@ module.exports = {
           ),
         ]);
       });
+      // Fix the auto-increment sequence to continue from max(id)
+      await queryInterface.sequelize.query(
+        `SELECT setval('"inventories_id_seq"', (SELECT MAX(id) FROM "inventories") + 1);`
+      );
     } catch (error) {
       console.log("add-inventories : ", error);
     }
@@ -61,5 +65,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("inventories", null, {});
+    // Reset the sequence
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "inventories_id_seq" RESTART WITH 1;`
+    );
   },
 };

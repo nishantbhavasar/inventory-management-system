@@ -70,6 +70,10 @@ module.exports = {
           ),
         ]);
       });
+      // Fix the auto-increment sequence to continue from max(id)
+      await queryInterface.sequelize.query(
+        `SELECT setval('"medias_id_seq"', (SELECT MAX(id) FROM "medias") + 1);`
+      );
     } catch (error) {
       console.log("add-medias : ", error);
     }
@@ -77,5 +81,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("medias", null, {});
+    // Reset the sequence
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "medias_id_seq" RESTART WITH 1;`
+    );
   },
 };

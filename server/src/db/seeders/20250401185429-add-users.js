@@ -12,7 +12,6 @@ module.exports = {
               {
                 id: 1,
                 name:"Admin",
-                
                 email: "admin@gmail.com",
                 password: "$2b$10$KSwFizdaAbeWzbgXSdzC3e1hIBfj1b4qWNyi1kcZ7agIrISwXAim6",
                 role_id: 1,
@@ -45,6 +44,10 @@ module.exports = {
           ),
         ]);
       });
+       // Fix the auto-increment sequence to continue from max(id)
+       await queryInterface.sequelize.query(
+        `SELECT setval('"users_id_seq"', (SELECT MAX(id) FROM "users") + 1);`
+      );
     } catch (error) {
       console.log('add-user : ', error);      
     }
@@ -52,5 +55,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("users", null, {});
+    // Reset the sequence
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "users_id_seq" RESTART WITH 1;`
+    );
   },
 };

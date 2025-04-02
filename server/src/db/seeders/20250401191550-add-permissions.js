@@ -46,6 +46,10 @@ module.exports = {
           ),
         ]);
       });
+      // Fix the auto-increment sequence to continue from max(id)
+      await queryInterface.sequelize.query(
+        `SELECT setval('"permissions_id_seq"', (SELECT MAX(id) FROM "permissions") + 1);`
+      );
     } catch (error) {
       console.log("add-permission : ", error);
     }
@@ -53,5 +57,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("permissions", null, {});
+    // Reset the sequence
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "permissions_id_seq" RESTART WITH 1;`
+    );
   },
 };

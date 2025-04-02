@@ -38,6 +38,10 @@ module.exports = {
           ),
         ]);
       });
+      // Fix the auto-increment sequence to continue from max(id)
+      await queryInterface.sequelize.query(
+        `SELECT setval('"categories_id_seq"', (SELECT MAX(id) FROM "categories") + 1);`
+      );
     } catch (error) {
       console.log("add-categories : ", error);
     }
@@ -45,5 +49,9 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("categories", null, {});
+    // Reset the sequence
+    await queryInterface.sequelize.query(
+      `ALTER SEQUENCE "categories_id_seq" RESTART WITH 1;`
+    );
   },
 };
