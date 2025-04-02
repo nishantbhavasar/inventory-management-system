@@ -1,6 +1,6 @@
-export interface ResponseType {
+export interface ResponseType<T = any> {
   message: string;
   success: boolean;
-  data: any;
+  data: T;
   statusCode: number;
 }

@@ -6,3 +6,7 @@ export type MediaAttibutes = {
   updatedAt?: Date;
   deletedAt?: Date;
 }
+export type InventoryMediasAttributetoryMedias = {
+  inventory_id:number
+  media_id:number
+}

@@ -9,11 +9,10 @@ import {
   DeletedAt,
   AutoIncrement,
 } from "sequelize-typescript";
-import { MEDIA_TYPE } from "@/types/Enum.type";
-import { MediaAttibutes } from "@/types/Media.type";
+import CategoryAttribute from "@/types/Category.type";
 
-@Table({ tableName: "medias", timestamps: true, modelName: "Medias" })
-export default class Media extends Model<MediaAttibutes> {
+@Table({ tableName: "categories", timestamps: true, modelName: "Categories" })
+export default class Categories extends Model<CategoryAttribute> {
   
   @AutoIncrement
   @Column({
@@ -38,27 +37,3 @@ export default class Media extends Model<MediaAttibutes> {
   @DeletedAt
   declare deletedAt: Date;
 }
-
-// 'use strict';
-// const {
-//   Model
-// } = require('sequelize');
-// module.exports = (sequelize, DataTypes) => {
-//   class categories extends Model {
-//     /**
-//      * Helper method for defining associations.
-//      * This method is not a part of Sequelize lifecycle.
-//      * The `models/index` file will call this method automatically.
-//      */
-//     static associate(models) {
-//       // define association here
-//     }
-//   }
-//   categories.init({
-//     category_name: DataTypes.STRING
-//   }, {
-//     sequelize,
-//     modelName: 'categories',
-//   });
-//   return categories;
-// };

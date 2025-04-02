@@ -8,9 +8,7 @@ import {
   AllowNull, Unique,
   Default, DeletedAt,
   ForeignKey,
-  AutoIncrement,
-  HasOne,
-  BelongsTo
+  AutoIncrement, BelongsTo
 } from "sequelize-typescript";
 import { UserAttribute } from "@/types/UserTypes";
 import Roles from "./roles.model";
