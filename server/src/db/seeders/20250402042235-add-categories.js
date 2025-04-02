@@ -7,36 +7,29 @@ module.exports = {
       await queryInterface.sequelize.transaction(async (transaction) => {
         return Promise.all([
           await queryInterface.bulkInsert(
-            "users",
+            "categories",
             [
               {
                 id: 1,
-                name:"Admin",
-                
-                email: "admin@gmail.com",
-                password: "$2b$10$KSwFizdaAbeWzbgXSdzC3e1hIBfj1b4qWNyi1kcZ7agIrISwXAim6",
-                role_id: 1,
-                is_active: true,
+                category_name: "Cloths",
                 createdAt: new Date(),
                 updatedAt: new Date(),
               },
               {
                 id: 2,
-                name:'Manager',
-                email: "manager@gmail.com",
-                password: "$2b$10$KSwFizdaAbeWzbgXSdzC3e1hIBfj1b4qWNyi1kcZ7agIrISwXAim6",
-                role_id: 2,
-                is_active: true,
+                category_name: "Electronics",
                 createdAt: new Date(),
                 updatedAt: new Date(),
               },
               {
                 id: 3,
-                name:'User',
-                email: "user@gmail.com",
-                password: "$2b$10$KSwFizdaAbeWzbgXSdzC3e1hIBfj1b4qWNyi1kcZ7agIrISwXAim6",
-                role_id: 3,
-                is_active: true,
+                category_name: "Home Appliances",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              },
+              {
+                id: 4,
+                category_name: "Stastationery",
                 createdAt: new Date(),
                 updatedAt: new Date(),
               },
@@ -46,11 +39,11 @@ module.exports = {
         ]);
       });
     } catch (error) {
-      console.log('add-user : ', error);      
+      console.log("add-categories : ", error);
     }
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("users", null, {});
+    await queryInterface.bulkDelete("categories", null, {});
   },
 };

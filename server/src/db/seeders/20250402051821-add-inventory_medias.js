@@ -7,39 +7,39 @@ module.exports = {
       await queryInterface.sequelize.transaction(async (transaction) => {
         return Promise.all([
           await queryInterface.bulkInsert(
-            "permissions",
+            "inventory_medias",
             [
               {
-                id:1,
-                permission: "READ:INVENTORY",
+                media_id:1,
+                inventory_id:2,
               },
               {
-                id:2,
-                permission: "CREATE:INVENTORY",
+                media_id:2,
+                inventory_id:2,
               },
               {
-                id:3,
-                permission: "UPDATE:INVENTORY",
+                media_id: 3,
+                inventory_id:3,
               },
               {
-                id:4,
-                permission: "DELETE:INVENTORY",
+                media_id: 4,
+                inventory_id:3,
               },
               {
-                id:5,
-                permission: "READ:USER",
+                media_id: 5,
+                inventory_id:1,
               },
               {
-                id:6,
-                permission: "CREATE:USER",
+                media_id: 6,
+                inventory_id:1,
               },
               {
-                id:7,
-                permission: "UPDATE:USER",
+                media_id: 7,
+                inventory_id:4,
               },
               {
-                id:8,
-                permission: "DELETE:USER",
+                media_id: 8,
+                inventory_id:4,
               },
             ],
             { transaction }
@@ -47,11 +47,11 @@ module.exports = {
         ]);
       });
     } catch (error) {
-      console.log("add-permission : ", error);
+      console.log("add-inventory_medias : ", error);
     }
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("permissions", null, {});
+    await queryInterface.bulkDelete("inventory_medias", null, {});
   },
 };
