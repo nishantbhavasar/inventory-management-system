@@ -3,6 +3,13 @@ import { Route, BrowserRouter as Router, Routes } from "react-router";
 import { lazy, Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import SignUp from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Layout from "./pages/Layout";
+import Inventories from "./pages/Inventories";
+import Users from "./pages/Users";
+
+// const Signin = lazy(() => import("./pages/Signin"));
 
 function App() {
   return (
@@ -10,11 +17,15 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Toaster />
         <Routes>
-          <Route path="/" element={<>ROOT</>} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<SignUp />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="profile" element={<>PROTECTED</>} />
+            <Route path="/" element={<Layout />}>
+              <Route path="inventories" element={<Inventories />} />
+              <Route path="users" element={<Users />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<NotFound />} />

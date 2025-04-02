@@ -4,15 +4,15 @@ import { getLocalStrorageItem } from "../utils/utils";
 
 export interface RequestData<T = any> {
   params?: Record<string, any>;
-  data?: T | Record<string, any>;
+  data?: T | Record<string, any> | any;
   headers?: Record<string, string>;
 }
 
 interface ApiResponse<T = any> {
   status: number;
-  success:boolean;
+  success: boolean;
   data: T;
-  message?: string;
+  message: string;
 }
 
 export default class API {
@@ -36,22 +36,20 @@ export default class API {
         url: `${this.baseUrl}${url}`,
         headers: this.setHeaders(data, url),
         params: data?.params,
-        data: data?.data
+        data: data?.data,
       };
       const response: AxiosResponse<ApiResponse<T>> = await axios(axiosConfig);
 
       if (response.data.status === 401 || response.data.status === 403) {
-        this.handleUnauthorizedAccess(response.data.message);
         return Promise.reject("Unauthorized");
       }
 
-      return response.data
+      return response.data;
     } catch (error: any) {
       if (
         error.response &&
         (error.response.status === 401 || error.response.status === 403)
       ) {
-        this.handleUnauthorizedAccess(error.response.data?.message);
         return Promise.reject("Unauthorized");
       }
       return Promise.reject(error?.response?.data);
@@ -74,12 +72,6 @@ export default class API {
     return this.api<T>("DELETE", url, data);
   }
 
-  private handleUnauthorizedAccess(message?: string): void {
-    alert(message || "Unauthorized Access");
-    localStorage.clear();
-    window.location.href = "/signin";
-  }
-
   private setHeaders(data?: RequestData, url?: string): Record<string, string> {
     const headers: Record<string, string> = {
       "accept-language": "en",
@@ -91,7 +83,7 @@ export default class API {
     }
 
     if (this.isLoggedIn) {
-      const idToken = getLocalStrorageItem()?.auth?.access_token
+      const idToken = getLocalStrorageItem()?.auth?.user?.access_token;
       const state = localStorage.getItem("state") ?? "{}";
 
       if (idToken && state) {

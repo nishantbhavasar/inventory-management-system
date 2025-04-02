@@ -4,18 +4,16 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  role: string;
+  access_token: string;
 }
 
 export interface AuthState {
   isLogin: boolean;
-  access_token: string | null;
   user: null | User;
 }
 
 const initialState: AuthState = {
-  access_token: null,
-  isLogin: true,
+  isLogin: false,
   user: null,
 };
 
