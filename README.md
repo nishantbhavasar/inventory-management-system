@@ -109,3 +109,18 @@ and also implemeted all listed features in task.
 3. run application
 
 - npm run dev
+
+## Here Are Admin the Login Credentials 
+email :- admin@gmail.com
+password :- Test@123
+
+Have Access :- All Routes
+
+
+## Here Are Manager the Login Credentials 
+email :- manager@gmail.com
+password :- Test@123
+
+Have Access :- Only View & Create Inventory Permission
+Do Not Have Access :- Edit / Delete Inventory
+

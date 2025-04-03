@@ -25,22 +25,6 @@ module.exports = {
                 id:4,
                 permission: "DELETE:INVENTORY",
               },
-              {
-                id:5,
-                permission: "READ:USER",
-              },
-              {
-                id:6,
-                permission: "CREATE:USER",
-              },
-              {
-                id:7,
-                permission: "UPDATE:USER",
-              },
-              {
-                id:8,
-                permission: "DELETE:USER",
-              },
             ],
             { transaction }
           ),
