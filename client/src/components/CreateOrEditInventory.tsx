@@ -103,7 +103,19 @@ const CreateOrEditInventory = ({
   const editInventoryDetails = async (data: any) => {
     setIsLoading(true);
     try {
-      const response = await updateInventory(inventory_id, data);
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("price", data.price);
+      formData.append("quantity", data.quantity);
+      formData.append("description", data.description);
+      formData.append(
+        "categories",
+        data.categories?.map((category: any) => category?.value)?.join(",")
+      );
+      // Array.from(data?.medias)?.forEach?.((image: any) => {
+      //   formData.append("images", image);
+      // });
+      const response = await updateInventory(inventory_id, formData);
       if (response.success) {
         toast.success("Inventory Updated Successfully");
         refereshTable();
@@ -123,7 +135,20 @@ const CreateOrEditInventory = ({
   const createNewInventory = async (data: any) => {
     setIsLoading(true);
     try {
-      const response = await createInventory(data);
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("price", data.price);
+      formData.append("quantity", data.quantity);
+      formData.append("description", data.description);
+      formData.append(
+        "categories",
+        data.categories?.map((category: any) => category?.value)?.join(",")
+      );
+      // console.log({medias:Array.from(data?.medias)})
+      // Array.from(data?.medias)?.forEach?.((image: any) => {
+      //   formData.append("images", image);
+      // });
+      const response = await createInventory(formData);
       if (response.success) {
         toast.success("Inventory Created Successfully");
         refereshTable();
@@ -225,7 +250,7 @@ const CreateOrEditInventory = ({
         label={"Description"}
         error={errors?.description?.message}
       />
-      <Input
+      {/* <Input
         isLoading={isLoading}
         disabled={isLoading}
         type="file"
@@ -234,10 +259,10 @@ const CreateOrEditInventory = ({
         className=""
         label={"Inventory Images"}
         error={errors?.medias?.message}
-      />
+      /> */}
       <Select
         required={false}
-        options={[categories]}
+        options={categories}
         isSearchable={true}
         defaultValue={getValues("categories")}
         isDisabled={isLoading}

@@ -1,22 +1,41 @@
 import {
   Table,
-  Column, Model, ForeignKey
+  Column,
+  Model,
+  ForeignKey,
+  BelongsTo,
+  DataType,
+  PrimaryKey,
 } from "sequelize-typescript";
-import { MediaAttibutes } from "@/types/Media.type";
 import Roles from "./roles.model";
 import Permissions from "./permissions.model";
 
 @Table({
-  tableName: "role_permission",
+  tableName: "role_permissions",
   timestamps: false,
   modelName: "RolePermission",
 })
-export default class RolePermission extends Model<MediaAttibutes> {
+export default class RolePermission extends Model {
+  @PrimaryKey
   @ForeignKey(() => Roles)
-  @Column
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   declare role_id: number;
 
+  @PrimaryKey
   @ForeignKey(() => Permissions)
-  @Column
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   declare permission_id: number;
+
+  // Define Associations
+  @BelongsTo(() => Roles)
+  declare Role?: Roles;
+
+  @BelongsTo(() => Permissions)
+  declare Permission?: Permissions;
 }

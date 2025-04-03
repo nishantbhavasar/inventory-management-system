@@ -19,16 +19,6 @@ const Layout = () => {
           >
             Inventories
           </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              `w-full inline-block border-2 border-secondary p-1 rounded-lg hover:bg-secondary ${
-                isActive ? "bg-secondary" : ""
-              }`
-            }
-            to={"/categories"}
-          >
-            Categories
-          </NavLink>
         </ul>
         <div
           className={

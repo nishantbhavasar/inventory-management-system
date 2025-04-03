@@ -8,6 +8,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import { CgOptions } from "react-icons/cg";
 import CreateOrEditInventory from "../components/CreateOrEditInventory";
 import Button from "../components/common/Button";
+import CategoryDrawer from "../components/CategoryDrawer";
 
 const Inventories = () => {
   const tableRef = useRef<any>(null);
@@ -20,9 +21,9 @@ const Inventories = () => {
   const [inventoryModelOpen, setInventoryModelOpen] = useState<
     boolean | number
   >(false);
+  const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
 
   const fetchInventories = async (filter: any, search: string) => {
-    console.log({ filter, search });
     setIsLoading(true);
     try {
       const response: any = await getAllInventories({
@@ -70,14 +71,24 @@ const Inventories = () => {
 
       <div className="p-4 flex flex-col gap-4 border-2 rounded-3xl">
         <div className="flex justify-between items-center border-b-[1px] pb-4">
-          <Button
-            className="p-2 hover:bg-primary hover:text-white"
-            title="Create Inventory"
-            rounded
-            onClick={() => {
-              setInventoryModelOpen(true);
-            }}
-          />
+          <div className="flex justify-center items-center gap-3">
+            <Button
+              className="p-2 hover:bg-primary hover:text-white"
+              title="Create Inventory"
+              rounded
+              onClick={() => {
+                setInventoryModelOpen(true);
+              }}
+            />
+            <Button
+              className="p-2 hover:bg-primary hover:text-white"
+              title="Category"
+              rounded
+              onClick={() => {
+                setCategoryDrawerOpen(true);
+              }}
+            />
+          </div>
           <Input
             label={"Search"}
             parentClassName={"!flex-row !items-center gap-2 !w-96"}
@@ -123,6 +134,12 @@ const Inventories = () => {
         inventory_id={inventoryModelOpen as number}
         isOpen={Boolean(inventoryModelOpen)}
         refereshTable={refereshTable}
+      />
+      <CategoryDrawer
+        close={() => {
+          setCategoryDrawerOpen(false);
+        }}
+        isOpen={categoryDrawerOpen}
       />
     </div>
   );

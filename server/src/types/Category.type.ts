@@ -1,8 +1,8 @@
 export default interface CategoryAttribute {
   id?: number;
   category_name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   deletedAt?: Date;
 }
 

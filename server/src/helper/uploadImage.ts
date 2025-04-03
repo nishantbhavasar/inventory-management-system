@@ -1,4 +1,3 @@
-// import AWS from "aws-sdk"
 import axios from "axios";
 
 export async function uploadImageToImgDD(key: string, imageFile: any) {

@@ -6,5 +6,6 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   dialect: process.env.DB_DIALECT as "postgres",
   models: [__dirname + "/models"],
+  logging:false
 });
 export default sequelize;

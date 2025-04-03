@@ -21,11 +21,11 @@ export const jwtValidation = (req: Request, res: Response, next: NextFunction) =
   try {
     token = token.replace("Bearer ", "");
     const verified = jwt.verify(token, process.env.TOKEN_SECRET ?? '');
-    if(verified){
-        setUserData(verified, req);
-        next();
-    }else{
-        throw new Error("Invalid Token");
+    if (verified) {
+      setUserData(verified, req);
+      next();
+    } else {
+      throw new Error("Invalid Token");
     }
   } catch (error) {
     next(error);

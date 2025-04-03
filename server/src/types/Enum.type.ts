@@ -1,4 +1,4 @@
 export const MEDIA_TYPE = {
-  IMAGE: "image",
-  VIDEO: "video",
+  IMAGE: "IMAGE",
+  VIDEO: "VIDEO",
 } as const;

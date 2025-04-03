@@ -31,7 +31,6 @@ const Signin = () => {
     try {
       const response: any = await loginapi(data);
       if (response.success) {
-        console.log(response);
         dispatch(
           login({
             id: response.data?.user?.id,
@@ -49,7 +48,6 @@ const Signin = () => {
     } finally {
       setIsLoading(false);
     }
-    console.log(data);
   };
   return (
     <div className="flex justify-center items-center h-screen w-screen flex-col gap-4">
@@ -88,7 +86,7 @@ const Signin = () => {
           }}
         />
       </div>
-      <Link to={"/signup"}>SignUp</Link>
+      {/* <Link to={"/signup"}>SignUp</Link> */}
     </div>
   );
 };

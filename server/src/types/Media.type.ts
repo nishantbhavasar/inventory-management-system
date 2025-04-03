@@ -1,6 +1,6 @@
 export type MediaAttibutes = {
   id?: string;
-  type: "image" | "video";
+  type: "IMAGE" | "VIDEO";
   url: string;
   createdAt?: Date;
   updatedAt?: Date;

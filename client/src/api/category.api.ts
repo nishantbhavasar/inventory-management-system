@@ -18,7 +18,7 @@ export default class CategoryApi {
 
   public getAllCategories = async () => {
     try {
-      const response = await this.api.post(this.API_ROUTES.GET_ALL_CATEGORIES);
+      const response = await this.api.get(this.API_ROUTES.GET_ALL_CATEGORIES);
       if (response.success) {
         return response;
       } else {

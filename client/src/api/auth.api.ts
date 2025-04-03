@@ -5,7 +5,6 @@ export default class AuthApi {
   public api: API;
   constructor() {
     this.api = new API();
-    console.log({ api: new API() });
     this.API_ROUTES = {
       login: "/api/auth/login",
       register: "/api/auth/register",

@@ -2,16 +2,18 @@ import {
   Table,
   Column,
   Model,
-  DataType, AllowNull, Unique, AutoIncrement
+  DataType, AllowNull, Unique, AutoIncrement,
+  PrimaryKey
 } from "sequelize-typescript";
 import { PermissionsAttribute } from "@/types/RolesType";
 
-@Table({ tableName: "permissions", timestamps: true, modelName: "Permissions" })
+@Table({ tableName: "permissions", timestamps: false, modelName: "Permissions" })
 export class Permissions extends Model<Partial<PermissionsAttribute>> {
 
   @AutoIncrement
+  @PrimaryKey
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     autoIncrement:true,
     primaryKey: true,
   })
@@ -19,7 +21,7 @@ export class Permissions extends Model<Partial<PermissionsAttribute>> {
 
   @AllowNull(false)
   @Unique(true)
-  @Column({})
+  @Column({type: DataType.STRING,})
   declare permission: string;
 }
 

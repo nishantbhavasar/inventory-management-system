@@ -7,9 +7,6 @@ import SignUp from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Layout from "./pages/Layout";
 import Inventories from "./pages/Inventories";
-import Categories from "./pages/Categories";
-
-// const Signin = lazy(() => import("./pages/Signin"));
 
 function App() {
   return (
@@ -24,7 +21,6 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Layout />}>
               <Route path="inventories" element={<Inventories />} />
-              <Route path="categories" element={<Categories />} />
             </Route>
           </Route>
 

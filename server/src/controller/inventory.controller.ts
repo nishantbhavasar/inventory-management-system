@@ -2,6 +2,12 @@ import { ResponseType } from "@/types/ResponseType";
 import Inventories from "@/db/models/inventories.model";
 import InventoryAttribute from "@/types/InventoryType";
 import { Op, Optional } from "sequelize";
+import InventoryMedias from "@/db/models/inventory_medias.model";
+import { uploadImageToImgDD } from "@/helper/uploadImage";
+import InventoryCategories from "@/db/models/inventory_categories.model";
+import Media from "@/db/models/media.model";
+import { MEDIA_TYPE } from "@/types/Enum.type";
+import CreateInventoryAttribute from "@/types/InventoryType";
 
 export default class InventoryController {
   async getAllInventory(body: {
@@ -107,19 +113,18 @@ export default class InventoryController {
   }
 
   async createInventory(
-    body: Optional<InventoryAttribute, "id">
+    body: Optional<CreateInventoryAttribute, "id">,
+    created_by: number
   ): Promise<ResponseType> {
     try {
+      // Step 1: Create inventory
       const inventory = await Inventories.create({
-        created_by: body?.created_by,
+        created_by: created_by,
         description: body?.description,
         name: body?.name,
         price: body?.price,
         quantity: body?.quantity,
       });
-
-      // TODO ? Add Medias
-      // TODO ? Add Categories
 
       if (!inventory) {
         return {
@@ -128,6 +133,44 @@ export default class InventoryController {
           data: null,
           statusCode: 400,
         };
+      }
+
+      // Step 2: Upload Images & Associate with Inventory
+      if (body?.images && Array.isArray(body.images)) {
+        await Promise.all(
+          body?.images?.map?.(async (image) => {
+            const uploadResult = (await uploadImageToImgDD("inventory", image)) as {
+              Location: string;
+              success: boolean;
+            };
+
+            if (uploadResult.success) {
+              const media = await Media.create({
+                type: MEDIA_TYPE.IMAGE,
+                url: uploadResult.Location,
+              });
+
+              return await InventoryMedias.create({
+                inventory_id: inventory.id,
+                media_id: Number(media.id), // Now properly assigned as a number
+              });
+            }
+            return null;
+          })
+        );
+      }
+
+
+      // Step 3: Associate Categories with Inventory
+      if (body?.categories && Array.isArray(body?.categories)) {
+        await Promise.all(
+          body?.categories.map(async (id: number) => {
+            return await InventoryCategories.create({
+              inventory_id: inventory.id,
+              category_id: id,
+            });
+          })
+        );
       }
 
       return {
@@ -150,9 +193,43 @@ export default class InventoryController {
       // Check If Invetnory isExists
       const inventory = await Inventories.findByPk(id);
 
-      // TODO ? update Medias
-      // TODO ? update Categories
+      // Upload Images & Associate with Inventory
+      if (body?.images && Array.isArray(body.images)) {
+        await Promise.all(
+          body?.images?.map?.(async (image) => {
+            const uploadResult = (await uploadImageToImgDD("inventory", image)) as {
+              Location: string;
+              success: boolean;
+            };
 
+            if (uploadResult.success) {
+              const media = await Media.create({
+                type: MEDIA_TYPE.IMAGE,
+                url: uploadResult.Location,
+              });
+
+              return await InventoryMedias.create({
+                inventory_id: id,
+                media_id: Number(media.id),
+              });
+            }
+            return null;
+          })
+        );
+      }
+
+      // Delete all existing categories
+      await InventoryCategories.destroy({ where: { inventory_id: id }, force: true });
+      if (body?.categories && Array.isArray(body?.categories)) {
+        const inventoryCategories = body?.categories.map((category_id: number) => ({
+          inventory_id: Number(id),
+          category_id: Number(category_id),
+        }))
+        console.clear()
+        console.log({ inventoryCategories });
+        const anw = await InventoryCategories.bulkCreate(inventoryCategories)
+        console.log({ anw });
+      }
       if (!inventory) {
         return {
           message: "Inventory With Given Id not Exists",

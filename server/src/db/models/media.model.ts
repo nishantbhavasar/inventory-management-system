@@ -14,11 +14,11 @@ import { MediaAttibutes } from "@/types/Media.type";
 @Table({ tableName: "medias", timestamps: true, modelName: "Medias" })
 export default class Media extends Model<MediaAttibutes> {
   @Column({
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
+    type: DataType.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   })
-  declare id: string;
+  declare id: number;
 
   @AllowNull(false)
   @Column({
