@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <div className="flex h-screen w-screen">
       {/* Side Bar */}
-      <div className="h-screen w-1/5 border-r-2 border-gray-700] p-3 flex flex-col justify-between">
+      <div className="h-screen w-1/6 border-r-2 border-gray-700] p-3 flex flex-col justify-between">
         <ul className="flex flex-col gap-3">
           <NavLink
             className={({ isActive }) =>
@@ -25,9 +25,9 @@ const Layout = () => {
                 isActive ? "bg-secondary" : ""
               }`
             }
-            to={"/users"}
+            to={"/categories"}
           >
-            Users
+            Categories
           </NavLink>
         </ul>
         <div
@@ -42,7 +42,7 @@ const Layout = () => {
         </div>
       </div>
       {/* Content Section */}
-      <div className="h-screen w-4/5 p-3">
+      <div className="h-screen w-5/6 p-3">
         <Outlet />
       </div>
     </div>

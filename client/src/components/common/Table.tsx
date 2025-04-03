@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { LuArrowDown, LuArrowUp, LuArrowUpDown } from "react-icons/lu";
-import "./Styles/CustomTableStyle.css";
 import { RiPushpin2Fill } from "react-icons/ri";
 
 const getCommonPinningStyles = (column: Column<any>, isCell: boolean) => {
@@ -32,7 +31,7 @@ const getCommonPinningStyles = (column: Column<any>, isCell: boolean) => {
   };
 };
 
-const CustomTable = ({
+const Table = ({
   column,
   data,
   dataCount,
@@ -135,7 +134,7 @@ const CustomTable = ({
       >
         <table className="min-w-full">
           <div className="max-h-[calc(100vh-280px)] min-h-[calc(100vh-280px)] h-[calc(100vh-280px)] relative">
-            <thead className="sticky top-0 bg-primary-extralight z-[2] min-w-full">
+            <thead className="sticky top-0 bg-secondary z-[2] min-w-full">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr className="" key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -222,7 +221,7 @@ const CustomTable = ({
               ))}
             </thead>
             {table?.getRowModel?.()?.rows?.length === 0 &&
-              isLoading === false && <div>No Data Available</div>}
+              isLoading === false && <div className="h-full w-full flex justify-center items-center">No Data Available</div>}
             <tbody>
               {isLoading ? (
                 <div>Loading ...</div>
@@ -270,4 +269,4 @@ const CustomTable = ({
   );
 };
 
-export default CustomTable;
+export default Table;

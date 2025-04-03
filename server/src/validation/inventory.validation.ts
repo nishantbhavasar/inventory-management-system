@@ -15,7 +15,6 @@ export const createInventoryValidate = joi.object({
   description: joi.string().required(),
   price: joi.number().required(),
   quantity: joi.number().required(),
-  created_by: joi.number().required(),
   categories: joi.array().items(joi.number().required()).required(),
 });
 

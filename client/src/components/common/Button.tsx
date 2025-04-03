@@ -53,7 +53,7 @@ const Button = ({
   ...rest
 }: ButtonProps) => {
   const classes = cx(
-    `group font-Roboto font-bold outline-none flex items-center  justify-center  transit leading-none transition-all ${
+    `group font-Roboto font-bold outline-none flex items-center  justify-center  transit leading-none transition-all cursor-pointer ${
       size === "xs" ? "text-xs gap-1" : "text-sm gap-1.5"
     }`,
     { [`pointer-events-none select-none`]: active || isLoading },
