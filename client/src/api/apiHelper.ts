@@ -40,19 +40,20 @@ export default class API {
       };
       const response: AxiosResponse<ApiResponse<T>> = await axios(axiosConfig);
 
-      if (response.data.status === 401 || response.data.status === 403) {
-        return Promise.reject("Unauthorized");
-      }
+      // if (response.data.status === 401 || response.data.status === 403) {
+      //   return Promise.reject("Unauthorized");
+      // }
 
       return response.data;
     } catch (error: any) {
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 403)
-      ) {
-        return Promise.reject("Unauthorized");
-      }
-      return Promise.reject(error?.response?.data);
+      console.log({ error })
+      // if (
+      //   error.response &&
+      //   (error.response.status === 401 || error.response.status === 403)
+      // ) {
+      return Promise.resolve(error?.response?.data);
+      // }
+      // return Promise.reject(error?.response?.data);
     }
   }
 

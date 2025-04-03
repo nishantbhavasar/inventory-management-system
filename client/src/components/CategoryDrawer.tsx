@@ -32,7 +32,7 @@ const CategoryDrawer = ({ isOpen,close }: CategoryDrawerProps) => {
     if (isOpen) {
       fetchCategories();
   }
-  }, []);
+  }, [isOpen]);
 
   const fetchCategories = async () => {
     try {

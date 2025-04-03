@@ -22,7 +22,11 @@ export default class CategoryApi {
       if (response.success) {
         return response;
       } else {
-        throw new Error(response.message);
+        return {
+          message: (response?.message ?? "Something Went Wrong") as string,
+          data: null,
+          success: false,
+        };
       }
     } catch (error) {
       return {
@@ -42,7 +46,11 @@ export default class CategoryApi {
       if (response.success) {
         return response;
       } else {
-        throw new Error(response.message);
+        return {
+          message: (response?.message ?? "Something Went Wrong") as string,
+          data: null,
+          success: false,
+        };
       }
     } catch (error) {
       return {
@@ -62,7 +70,11 @@ export default class CategoryApi {
       if (response.success) {
         return response;
       } else {
-        throw new Error(response.message);
+        return {
+          message: (response?.message ?? "Something Went Wrong") as string,
+          data: null,
+          success: false,
+        };
       }
     } catch (error) {
       return {

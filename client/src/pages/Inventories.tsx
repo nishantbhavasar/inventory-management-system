@@ -31,8 +31,13 @@ const Inventories = () => {
         page: filter?.currentPage,
         search: search,
       });
-      setInventories(response?.data?.rows ?? []);
-      setInventoryCount(response?.data?.count ?? 0);
+      if(response.success){
+        setInventories(response?.data?.rows ?? []);
+        setInventoryCount(response?.data?.count ?? 0);
+      }else{
+        console.log(response)
+        throw new Error(response.message);
+      }
     } catch (error) {
       // @ts-ignore
       toast.error(error?.message);

@@ -16,6 +16,8 @@ const inventoryController = new InventoryController();
 // get all inventory Api
 inventoryRouter.post(
   ROUTES.GET_ALL_INVENTORIES,
+  jwtValidation,
+  checkPermission(PERMISSIONS.INVENTORY.READ),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await inventoryController.getAllInventory(req?.body ?? {});
@@ -33,6 +35,8 @@ inventoryRouter.post(
 // get inventory by id Api
 inventoryRouter.get(
   ROUTES.GET_INVENTORY,
+  jwtValidation,
+  checkPermission(PERMISSIONS.INVENTORY.READ),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await inventoryController.getInventory(
@@ -146,7 +150,8 @@ inventoryRouter.put(
 // delete inventory by id Api
 inventoryRouter.delete(
   ROUTES.DELETE_INVENTORY,
-  //   validatePayload(loginSchemaValidate),
+  jwtValidation,
+  checkPermission(PERMISSIONS.INVENTORY.DELETE),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await inventoryController.deleteInventory(
